@@ -33,7 +33,7 @@ export default function Sidebar({
   const initials = `${givenName?.[0] ?? ""}${surname?.[0] ?? ""}`;
 
   return (
-    <aside className="w-64 bg-slate-900 flex flex-col justify-between p-4 relative">
+    <aside className="h-full w-64 bg-slate-900 flex flex-col justify-between p-4 relative">
       {/* Links della sidebar */}
       <nav className="space-y-4 text-slate-200">
         <a href="#" className="hover:text-blue-400 transition-colors">
