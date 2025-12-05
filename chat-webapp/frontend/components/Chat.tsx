@@ -58,21 +58,17 @@ export default function Chat() {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`relative group card p-3 ${
-              msg.sent ? "bg-slate-800 text-slate-200" : "bg-slate-700 text-slate-100"
-            }`}
+            className={`relative group p-4 rounded-xl border-2 ${
+              msg.sent
+                ? "bg-slate-800 border-slate-400 text-slate-100"
+                : "bg-slate-700 border-slate-400 text-slate-100"
+            } shadow-lg`}
           >
-            <p>{msg.text}</p>
+            <p className="text-sm">{msg.text}</p>
             <div className="absolute top-2 right-2 hidden group-hover:flex gap-2">
-              <ClipboardIcon
-                className="w-5 h-5 cursor-pointer hover:text-blue-400"
-                onClick={() => handleCopy(msg.text)}
-              />
+              <ClipboardIcon className="w-5 h-5 cursor-pointer hover:text-blue-400" />
               {msg.sent && (
-                <PencilSquareIcon
-                  className="w-5 h-5 cursor-pointer hover:text-blue-400"
-                  onClick={() => handleEdit(msg.id, msg.text)}
-                />
+                <PencilSquareIcon className="w-5 h-5 cursor-pointer hover:text-blue-400" />
               )}
             </div>
           </div>
