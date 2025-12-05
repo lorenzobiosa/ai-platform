@@ -84,8 +84,8 @@ export default function UserMenu({
             <div className="space-y-2 text-slate-300">
               <p><strong>Nome:</strong> {givenName}</p>
               <p><strong>Cognome:</strong> {surname}</p>
-              <p><strong>SAM Account:</strong> {samAccount}</p>
-              <p><strong>Email:</strong> {username ?? "Non disponibile"}</p>
+              <p><strong>Username:</strong> {samAccount}</p>
+              <p><strong>E-mail:</strong> {username ?? "Non disponibile"}</p>
             </div>
             <button
               onClick={() => setShowDetails(false)}
