@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  PaperClipIcon,
   ArrowUpCircleIcon,
   ClipboardIcon,
   PencilSquareIcon,
@@ -15,24 +14,13 @@ interface Message {
 export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [editId, setEditId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [inlineEditId, setInlineEditId] = useState<string | null>(null);
 
   // Invio messaggio dalla textarea principale
   const handleSend = () => {
     if (!input.trim()) return;
-    let newMessages = [...messages];
-    if (editId) {
-      const index = newMessages.findIndex((m) => m.id === editId);
-      if (index !== -1) {
-        newMessages[index].text = input;
-        newMessages = newMessages.slice(0, index + 1);
-      }
-      setEditId(null);
-    } else {
-      newMessages.push({ id: Date.now().toString(), text: input, sent: true });
-    }
+    const newMessages = [...messages, { id: Date.now().toString(), text: input, sent: true }];
     setMessages(newMessages);
     setInput("");
   };
@@ -40,24 +28,21 @@ export default function Chat() {
   // Attiva modalità edit inline
   const handleInlineEdit = (id: string) => {
     setInlineEditId(id);
-    setEditId(id);
   };
 
   // Conferma modifica inline
-  const confirmInlineEdit = () => {
-    setInlineEditId(null);
-  };
-
   const handleConfirmEdit = (id: string, newText: string) => {
     let newMessages = [...messages];
     const index = newMessages.findIndex((m) => m.id === id);
     if (index !== -1) {
-      newMessages[index].text = newText;
-      newMessages = newMessages.slice(0, index + 1); // Elimina successivi
+      const oldText = newMessages[index].text;
+      if (oldText !== newText.trim()) {
+        newMessages[index].text = newText.trim();
+        newMessages = newMessages.slice(0, index + 1); // Elimina successivi solo se modificato
+      }
     }
     setMessages(newMessages);
     setInlineEditId(null);
-    setEditId(null);
   };
 
   return (
@@ -71,40 +56,47 @@ export default function Chat() {
             onMouseLeave={() => setHoveredId(null)}
             className={`relative flex ${msg.sent ? "justify-end" : "justify-start"} mb-2`}
           >
-            <div className={`inline-block p-3 rounded-xl border-2 max-w-[70%] ${
+            <div
+              className={`inline-block p-3 rounded-xl border-2 max-w-[70%] ${
                 msg.sent
                   ? "bg-slate-800 border-slate-400 text-slate-300 self-end"
                   : "bg-slate-700 border-slate-400 text-slate-300 self-start"
               } shadow-lg`}
             >
               {inlineEditId === msg.id ? (
-                <div className="flex flex-col gap-2">
-                  <input
-                    type="text"
-                    value={msg.text}
-                    onChange={(e) => {
-                      const updated = messages.map((m) =>
-                        m.id === msg.id ? { ...m, text: e.target.value } : m
-                      );
-                      setMessages(updated);
-                    }}
-                    className="w-full rounded-lg px-2 py-1 text-slate-900"
-                  />
-                  <button
-                    onClick={() => handleConfirmEdit(msg.id, msg.text)}
-                    className="btn-blu w-full"
-                  >
-                    Conferma
-                  </button>
-                </div>
+                <textarea
+                  value={msg.text}
+                  onChange={(e) => {
+                    const updated = messages.map((m) =>
+                      m.id === msg.id ? { ...m, text: e.target.value } : m
+                    );
+                    setMessages(updated);
+                  }}
+                  onInput={(e) => {
+                    e.currentTarget.style.height = 'auto';
+                    e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleConfirmEdit(msg.id, msg.text);
+                    }
+                  }}
+                  className={`inline-block max-w-[70%] ${
+                    msg.sent
+                      ? "bg-slate-800 border-slate-400 text-slate-300 self-end"
+                      : "bg-slate-700 border-slate-400 text-slate-300 self-start"
+                  } shadow-lg resize-none`}
+                  style={{ fontSize: "inherit" }}
+                />
               ) : (
                 <span className="whitespace-pre-wrap">{msg.text}</span>
-              )}    
+              )}
             </div>
 
             {/* Popup con icone */}
-            {hoveredId === msg.id && (        
-              <div className="absolute bottom-0 right-4 translate-y-1/2 flex gap-2 bg-slate-700/90 border border-slate-500 rounded-md p-1 shadow-xl z-50 transition-opacity duration-200">
+            {hoveredId === msg.id && (
+              <div className="absolute bottom-0 right-4 translate-y-1/2 flex gap-2 bg-slate-700/80 backdrop-blur-sm border border-slate-500 rounded-md p-1 shadow-xl z-50 transition transform duration-200 ease-out scale-95 hover:scale-100 opacity-90">
                 <ClipboardIcon
                   className="w-4 h-4 text-slate-200 hover:text-blue-400 cursor-pointer"
                   onClick={() => navigator.clipboard.writeText(msg.text)}
@@ -127,7 +119,13 @@ export default function Chat() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Scrivi un messaggio..."
-          rows={3} // puoi regolare l'altezza
+          rows={3}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
           className="flex-1 rounded-lg px-4 py-2 bg-slate-800 text-slate-200 focus:outline-none resize-none whitespace-pre-wrap"
         />
         <button

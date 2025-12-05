@@ -1,4 +1,3 @@
-
 import type { AppProps } from 'next/app';
 import { MsalProvider } from '@azure/msal-react';
 import { getMsalInstance } from '../msal';

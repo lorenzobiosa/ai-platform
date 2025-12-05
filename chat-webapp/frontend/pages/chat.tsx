@@ -1,4 +1,3 @@
-
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useMsal, useIsAuthenticated } from "@azure/msal-react";
