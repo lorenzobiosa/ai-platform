@@ -1,0 +1,82 @@
+
+/* styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Impostazioni base */
+html, body, #__next {
+  height: 100%;
+}
+
+html {
+  /* Migliora rendering font */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tipografia di sistema: enterprise-friendly */
+body {
+  margin: 0;
+  font-family:
+    system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans,
+    Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: #e5e7eb;               /* slate-200 */
+  background-color: #0f172a;    /* slate-900 */
+}
+
+/* Focus ring accessibile su dark theme */
+:focus-visible {
+  outline: 2px solid #60a5fa;   /* blue-400 */
+  outline-offset: 2px;
+}
+
+/* Classe helper per gradient di sfondo “enterprise” */
+.bg-aurora {
+  background-image: radial-gradient(70% 40% at 30% 20%, rgba(29,78,216,0.25), transparent 60%),
+                    radial-gradient(60% 60% at 70% 10%, rgba(99,102,241,0.20), transparent 60%),
+                    radial-gradient(50% 50% at 50% 80%, rgba(14,165,233,0.15), transparent 60%);
+}
+
+/* Card ombra e bordo raffinati */
+.card {
+  @apply bg-slate-900/60 backdrop-blur rounded-2xl shadow-2xl ring-1 ring-slate-700;
+}
+
+/* Bottone principale (Microsoft) */
+.btn-primary {
+  @apply inline-flex w-full items-center justify-center gap-3 rounded-xl
+         bg-blue-600 px-5 py-3 text-base font-semibold text-white
+         shadow-lg shadow-blue-900/40 ring-1 ring-blue-400
+         hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60;
+}
+
+/* Bottone neutro (logout, azioni secondarie) */
+.btn-neutral {
+  @apply inline-flex items-center gap-2 rounded-lg bg-slate-800 px-4 py-2
+         text-sm text-slate-200 ring-1 ring-slate-700 hover:bg-slate-700;
+}
+
+/* Avvisi */
+.alert-error {
+  @apply rounded-lg border border-rose-600 bg-rose-950/40 px-3 py-2 text-rose-200;
+}
+.alert-ok {
+  @apply rounded-lg border border-emerald-600 bg-emerald-900/30 px-3 py-2 text-emerald-200;
+}
+
+/* Footer piccolo e discreto */
+.footer-thin {
+  @apply mt-8 flex items-center justify-between text-xs text-slate-400;
+}
+
+/* Placeholder del logo Microsoft in 2x2 quadretti (sostituibile con asset ufficiale) */
+.microsoft-logo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px;
+}
+.microsoft-logo span { display: block; height: 1rem; width: 1rem; border-radius: 2px; }
+.microsoft-logo .m-red    { background-color: #F25022; }
+.microsoft-logo .m-green  { background-color: #7FBA00; }
+.microsoft-logo .m-blue   { background-color: #00A4EF; }

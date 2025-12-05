@@ -1,0 +1,61 @@
+# Node modules e build
+node_modules
+.next
+out
+dist
+build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Configurazioni locali
+.env
+.env.*
+*.local
+
+# File di sistema
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+.gitattributes
+.hg
+.svn
+
+# Docker
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
+.dockerignore
+.docker/
+
+# IDE e editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+*.iml
+
+# Test e coverage
+coverage/
+*.spec.ts
+*.test.ts
+*.spec.js
+*.test.js
+.nyc_output/
+
+# Cache
+*.swp
+*.swo
+*.bak
+*.tmp
+.cache/
