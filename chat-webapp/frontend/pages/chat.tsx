@@ -104,6 +104,7 @@ function ChatPageInner() {
           givenName={givenName}
           surname={surname}
           samAccount={samAccount}
+          username={account?.username}
           onLogout={handleLogout}
         />
   

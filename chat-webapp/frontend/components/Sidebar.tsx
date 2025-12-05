@@ -5,6 +5,7 @@ interface SidebarProps {
   givenName: string | null;
   surname: string | null;
   samAccount: string | null;
+  username: string | null;
   onLogout: () => void;
 }
 
@@ -12,6 +13,7 @@ export default function Sidebar({
   givenName,
   surname,
   samAccount,
+  username,
   onLogout,
 }: SidebarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -67,6 +69,7 @@ export default function Sidebar({
             givenName={givenName}
             surname={surname}
             samAccount={samAccount}
+            username={username}
             onLogout={onLogout}
           />
         </div>
