@@ -40,11 +40,24 @@ export default function Chat() {
   // Attiva modalità edit inline
   const handleInlineEdit = (id: string) => {
     setInlineEditId(id);
+    setEditId(id);
   };
 
   // Conferma modifica inline
   const confirmInlineEdit = () => {
     setInlineEditId(null);
+  };
+
+  const handleConfirmEdit = (id: string, newText: string) => {
+    let newMessages = [...messages];
+    const index = newMessages.findIndex((m) => m.id === id);
+    if (index !== -1) {
+      newMessages[index].text = newText;
+      newMessages = newMessages.slice(0, index + 1); // Elimina successivi
+    }
+    setMessages(newMessages);
+    setInlineEditId(null);
+    setEditId(null);
   };
 
   return (
@@ -78,7 +91,7 @@ export default function Chat() {
                     className="w-full rounded-lg px-2 py-1 text-slate-900"
                   />
                   <button
-                    onClick={confirmInlineEdit}
+                    onClick={() => handleConfirmEdit(msg.id, msg.text)}
                     className="btn-blu w-full"
                   >
                     Conferma
@@ -86,7 +99,7 @@ export default function Chat() {
                 </div>
               ) : (
                 <span className="whitespace-pre-wrap">{msg.text}</span>
-              )}
+              )}    
             </div>
 
             {/* Popup con icone */}
