@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import {
   PaperClipIcon,
@@ -17,15 +16,14 @@ export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [editId, setEditId] = useState<string | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [inlineEditId, setInlineEditId] = useState<string | null>(null);
 
-  // Invio messaggio
+  // Invio messaggio dalla textarea principale
   const handleSend = () => {
     if (!input.trim()) return;
-
     let newMessages = [...messages];
-
     if (editId) {
-      // Modifica messaggio esistente e rimuovi successivi
       const index = newMessages.findIndex((m) => m.id === editId);
       if (index !== -1) {
         newMessages[index].text = input;
@@ -35,64 +33,96 @@ export default function Chat() {
     } else {
       newMessages.push({ id: Date.now().toString(), text: input, sent: true });
     }
-
     setMessages(newMessages);
     setInput("");
   };
 
-  // Copia messaggio
-  const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
+  // Attiva modalità edit inline
+  const handleInlineEdit = (id: string) => {
+    setInlineEditId(id);
   };
 
-  // Modifica messaggio
-  const handleEdit = (id: string, text: string) => {
-    setInput(text);
-    setEditId(id);
+  // Conferma modifica inline
+  const confirmInlineEdit = () => {
+    setInlineEditId(null);
   };
 
   return (
-    <div className="flex flex-col h-full bg-slate-900">
+    <div className="flex flex-col h-full p-4 bg-slate-900 text-slate-200 text-sm font-medium">
       {/* Area messaggi */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto space-y-5">
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`relative group p-4 rounded-xl border-2 ${
-              msg.sent
-                ? "bg-slate-800 border-slate-400 text-slate-100"
-                : "bg-slate-700 border-slate-400 text-slate-100"
-            } shadow-lg`}
+            onMouseEnter={() => setHoveredId(msg.id)}
+            onMouseLeave={() => setHoveredId(null)}
+            className={`relative flex ${msg.sent ? "justify-end" : "justify-start"} mb-2`}
           >
-            <p className="text-sm">{msg.text}</p>
-            <div className="absolute top-2 right-2 hidden group-hover:flex gap-2">
-              <ClipboardIcon className="w-5 h-5 cursor-pointer hover:text-blue-400" />
-              {msg.sent && (
-                <PencilSquareIcon className="w-5 h-5 cursor-pointer hover:text-blue-400" />
+            <div className={`inline-block p-3 rounded-xl border-2 max-w-[70%] ${
+                msg.sent
+                  ? "bg-slate-800 border-slate-400 text-slate-300 self-end"
+                  : "bg-slate-700 border-slate-400 text-slate-300 self-start"
+              } shadow-lg`}
+            >
+              {inlineEditId === msg.id ? (
+                <div className="flex flex-col gap-2">
+                  <input
+                    type="text"
+                    value={msg.text}
+                    onChange={(e) => {
+                      const updated = messages.map((m) =>
+                        m.id === msg.id ? { ...m, text: e.target.value } : m
+                      );
+                      setMessages(updated);
+                    }}
+                    className="w-full rounded-lg px-2 py-1 text-slate-900"
+                  />
+                  <button
+                    onClick={confirmInlineEdit}
+                    className="btn-blu w-full"
+                  >
+                    Conferma
+                  </button>
+                </div>
+              ) : (
+                <span className="whitespace-pre-wrap">{msg.text}</span>
               )}
             </div>
+
+            {/* Popup con icone */}
+            {hoveredId === msg.id && (        
+              <div className="absolute bottom-0 right-4 translate-y-1/2 flex gap-2 bg-slate-700/90 border border-slate-500 rounded-md p-1 shadow-xl z-50 transition-opacity duration-200">
+                <ClipboardIcon
+                  className="w-4 h-4 text-slate-200 hover:text-blue-400 cursor-pointer"
+                  onClick={() => navigator.clipboard.writeText(msg.text)}
+                />
+                {msg.sent && (
+                  <PencilSquareIcon
+                    className="w-4 h-4 text-slate-200 hover:text-blue-400 cursor-pointer"
+                    onClick={() => handleInlineEdit(msg.id)}
+                  />
+                )}
+              </div>
+            )}
           </div>
         ))}
       </div>
 
-      {/* Area input */}
-      <div className="border-t border-slate-700 p-2 flex items-center gap-2">
-        <button className="btn-neutral" aria-label="Allega file">
-          <PaperClipIcon className="w-6 h-6" />
-        </button>
+      {/* Area input principale */}
+      <div className="mt-4 flex items-center gap-2">
         <textarea
-          className="flex-1 resize-none rounded-lg bg-slate-800 text-slate-200 p-2"
-          rows={1}
-          placeholder="Scrivi un messaggio..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          placeholder="Scrivi un messaggio..."
+          rows={3} // puoi regolare l'altezza
+          className="flex-1 rounded-lg px-4 py-2 bg-slate-800 text-slate-200 focus:outline-none resize-none whitespace-pre-wrap"
         />
-        <button className="btn-blu"
-          //className="btn-primary w-12 h-12 flex items-center justify-center"
-          aria-label="Invia messaggio"
+        <button
           onClick={handleSend}
+          className="btn-blu flex items-center gap-2"
         >
           <ArrowUpCircleIcon className="w-6 h-6" />
+          Invia
         </button>
       </div>
     </div>
