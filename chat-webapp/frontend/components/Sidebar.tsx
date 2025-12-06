@@ -46,9 +46,9 @@ export default function Sidebar({
       }`}
     >
       {/* Sezione di navigazione */}
-      <nav className="text-slate-200 p-4">
+      <nav className="text-slate-300">
         {/* Riga Home + Toggle Sidebar */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-3">
           <button
             className="hover:text-blue-400 hover:bg-slate-700 rounded-lg p-2 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
@@ -66,35 +66,50 @@ export default function Sidebar({
 
         {/* New Chat */}
         {!isCollapsed && (
-          <div className="flex items-center gap-2 mb-4 cursor-pointer hover:bg-slate-700 rounded-lg p-2 transition-colors">
-            <PencilSquareIcon className="w-6 h-6" />
-            <span className="text-slate-200 font-medium">New chat</span>
+          <div className="flex items-center gap-2 cursor-pointer hover:bg-slate-700 rounded-lg p-2 transition-colors">
+            <PencilSquareIcon className="w-5 h-5" />
+            <span className="text-slate-300">New chat</span>
           </div>
         )}
 
         {/* Search Chat */}
         {!isCollapsed && (
-          <div className="flex items-center gap-2 mb-6 cursor-pointer hover:bg-slate-700 rounded-lg p-2 transition-colors">
-            <MagnifyingGlassIcon className="w-6 h-6" />
-            <span className="text-slate-200 font-medium">Search chats</span>
+          <div className="flex items-center gap-2 mb-3 cursor-pointer hover:bg-slate-700 rounded-lg p-2 transition-colors">
+            <MagnifyingGlassIcon className="w-5 h-5" />
+            <span className="text-slate-300">Search chats</span>
           </div>
         )}
 
         {/* Storico conversazioni */}
         {!isCollapsed && (
-          <section className="text-slate-300 text-sm overflow-y-auto max-h-64 border-t border-slate-700 pt-2">
-            <p className="mb-2 font-semibold text-slate-400">Recent chats</p>
-            <ul className="space-y-2">
-              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer">
+          <section className="text-slate-300 text-sm overflow-y-auto max-h-64 p-2">
+            <p className="mb-2 text-slate-400">Recent chats</p>
+            <ul>
+              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
                 Chat con Mario Rossi
               </li>
-              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer">
+              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
                 Progetto Azure ML
               </li>
-              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer">
+              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
                 Team Meeting
               </li>
-              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer">
+              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
+                Conversazione AI
+              </li>
+              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
+                Conversazione AI
+              </li>
+              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
+                Conversazione AI
+              </li>
+              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
+                Conversazione AI
+              </li>
+              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
+                Conversazione AI
+              </li>
+              <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
                 Conversazione AI
               </li>
             </ul>

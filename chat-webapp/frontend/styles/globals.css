@@ -88,3 +88,28 @@ body {
 .microsoft-logo .m-red    { background-color: #F25022; }
 .microsoft-logo .m-green  { background-color: #7FBA00; }
 .microsoft-logo .m-blue   { background-color: #00A4EF; }
+
+/* Scrollbar per Webkit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 8px; /* larghezza sottile */
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a; /* sfondo coerente con bg-slate-900 */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #475569; /* colore coerente con slate-700 */
+  border-radius: 4px;
+  border: 2px solid #0f172a; /* separazione elegante */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #64748b; /* hover più chiaro */
+}
+
+/* Scrollbar per Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #475569 #0f172a;
+}
