@@ -21,7 +21,7 @@ export default function MessageBox({
     <div
       className={`inline-block p-3 rounded-xl border-2 max-w-[70%] ${
         msg.sent
-          ? "bg-slate-800 border-slate-400 text-slate-300 self-end"
+          ? "bg-slate-700 border-slate-400 text-slate-300 self-end"
           : "bg-slate-700 border-slate-400 text-slate-300 self-start"
       } shadow-lg relative`}
     >

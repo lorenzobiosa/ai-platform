@@ -45,7 +45,7 @@ export default function Chat() {
   };
 
   return (
-    <div className="flex flex-col h-full p-4 bg-slate-900 text-slate-200 text-sm font-medium">
+    <div className="flex flex-col h-full p-4 bg-slate-800 text-slate-200 text-sm font-medium">
       {/* Area messaggi */}
       <div className="flex-1 overflow-y-auto space-y-5">
         {messages.map((msg) => (
@@ -80,7 +80,7 @@ export default function Chat() {
               handleSend();
             }
           }}
-          className="flex-1 rounded-lg px-4 py-2 bg-slate-800 text-slate-200 focus:outline-none resize-none whitespace-pre-wrap"
+          className="flex-1 rounded-lg px-4 py-2 bg-slate-700 text-slate-200 focus:outline-none resize-none whitespace-pre-wrap"
         />
         <button onClick={handleSend} className="btn-blu flex items-center gap-2">
           <ArrowUpCircleIcon className="w-6 h-6" />
