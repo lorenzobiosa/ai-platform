@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from "react";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 
@@ -35,7 +34,7 @@ export default function ChatContextMenu({ onRename, onDelete, onClose }: ChatCon
       </button>
       <button
         onClick={onDelete}
-        className="flex items-center gap-2 hover:bg-rose-900 p-2 rounded text-rose-500"
+        className="flex items-center gap-2 hover:bg-slate-700 p-2 rounded text-rose-500"
       >
         <TrashIcon className="w-4 h-4" />
         <span>Cancella</span>

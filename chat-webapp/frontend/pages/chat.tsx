@@ -6,6 +6,7 @@ import { loginRequest, getMsalInstance } from "../msal";
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Chat from "../components/Chat";
+import { PaperClipIcon, ArrowUpCircleIcon } from "@heroicons/react/24/outline";
 
 function ChatPageInner() {
   const msalInstance = getMsalInstance();
@@ -16,9 +17,12 @@ function ChatPageInner() {
   const [givenName, setGivenName] = useState<string | null>(null);
   const [surname, setSurname] = useState<string | null>(null);
 
-  /**
-   * Login automatico se non autenticato
-   */
+  // Stato per layout iniziale
+  const [messages, setMessages] = useState<{ id: string; text: string; sent: boolean }[]>([]);
+  const [inputText, setInputText] = useState("");
+  const hasMessages = messages.length > 0;
+
+  /** Login automatico se non autenticato */
   useEffect(() => {
     if (!msalInstance) return;
     if (inProgress === InteractionStatus.None && !isAuthenticated) {
@@ -30,23 +34,18 @@ function ChatPageInner() {
     }
   }, [inProgress, isAuthenticated, msalInstance]);
 
-  /**
-   * Recupera dati utente da Microsoft Graph
-   */
+  /** Recupera dati utente da Microsoft Graph */
   useEffect(() => {
     if (!isAuthenticated || !accounts[0] || !msalInstance) return;
     const account = accounts[0];
-
     const fetchGraphData = async () => {
       try {
         const response = await msalInstance.acquireTokenSilent({ ...loginRequest, account });
         const token = response.accessToken;
-
         const graphResponse = await fetch(
           "https://graph.microsoft.com/v1.0/me?$select=onPremisesSamAccountName,givenName,surname",
           { headers: { Authorization: `Bearer ${token}` } }
         );
-
         if (!graphResponse.ok) throw new Error("Graph API error");
         const data = await graphResponse.json();
         setSamAccount(data.onPremisesSamAccountName);
@@ -60,13 +59,10 @@ function ChatPageInner() {
         }
       }
     };
-
     fetchGraphData();
   }, [isAuthenticated, accounts, msalInstance]);
 
-  /**
-   * Se non autenticato, mostra messaggio di attesa
-   */
+  /** Se non autenticato, mostra messaggio di attesa */
   if (!isAuthenticated) {
     return (
       <div className="flex items-center justify-center h-screen text-slate-200">
@@ -77,9 +73,7 @@ function ChatPageInner() {
 
   const account = instance.getActiveAccount() ?? accounts[0];
 
-  /**
-   * Logout sicuro
-   */
+  /** Logout sicuro */
   const handleLogout = () => {
     try {
       sessionStorage.removeItem("msal_login_attempted");
@@ -88,18 +82,21 @@ function ChatPageInner() {
     msalInstance?.logoutRedirect();
   };
 
-  /**
-   * Layout principale con Sidebar e area chat
-   */
+  /** Invio messaggio */
+  const handleSend = () => {
+    if (!inputText.trim()) return;
+    setMessages([...messages, { id: Date.now().toString(), text: inputText, sent: true }]);
+    setInputText("");
+  };
+
   return (
     <>
       <Head>
         <title>Chat - AI Platform</title>
       </Head>
       <div className="flex h-screen bg-slate-900">
-        {/* Sidebar con utente in basso */}
+        {/* Sidebar */}
         <aside className="h-full border-r border-slate-700 flex flex-col justify-between">
-          {/* Parte bassa: info utente e logout */}
           <div className="h-full text-slate-200 text-sm">
             <Sidebar
               givenName={givenName}
@@ -111,14 +108,18 @@ function ChatPageInner() {
           </div>
         </aside>
 
-        {/* Area chat */}
+        {/* Area principale */}
         <main className="flex-1 flex flex-col">
-          <Chat /> {/* Componente con messaggi scrollabili e barra input */}
+          <Chat
+            messages={messages}
+            inputText={inputText}
+            setInputText={setInputText}
+            onSend={handleSend}
+          />
         </main>
       </div>
     </>
   );
 }
 
-// Disabilita SSR per MSAL
 export default dynamic(() => Promise.resolve(ChatPageInner), { ssr: false });

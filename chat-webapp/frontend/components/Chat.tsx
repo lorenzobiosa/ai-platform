@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
+import { ArrowUpCircleIcon, PaperClipIcon } from "@heroicons/react/24/outline";
 import MessageBubble from "./MessageBubble";
 
 interface Message {
@@ -44,49 +44,87 @@ export default function Chat() {
     setMessages(updated);
   };
 
+  // ✅ Logica per schermata iniziale
+  const hasMessages = messages.length > 0;
+
   return (
     <div className="flex flex-col h-full p-4 bg-slate-800 text-slate-200 text-sm">
-      {/* Area messaggi */}
-      <div className="flex-1 overflow-y-auto space-y-5">
-        {messages.map((msg) => (
-          <div
-            key={msg.id}
-            onMouseEnter={() => setHoveredId(msg.id)}
-            onMouseLeave={() => setHoveredId(null)}
-            className={`relative flex ${msg.sent ? "justify-end" : "justify-start"} mb-2`}
-          >
-            <MessageBubble
-              msg={msg}
-              isHovered={hoveredId === msg.id}
-              isEditing={inlineEditId === msg.id}
-              onEditStart={handleInlineEdit}
-              onEditConfirm={handleConfirmEdit}
-              onChangeText={handleChangeText}
+      {!hasMessages ? (
+        // ✅ Layout iniziale
+        <div className="flex flex-col items-center justify-center flex-1 text-center">
+          <h1 className="text-5xl font-bold mb-8">AI Platform</h1>
+          <div className="w-full max-w-xl">
+            {/* Pulsanti sopra input */}
+            <div className="flex justify-between mb-2">
+              <button className="p-2 rounded hover:bg-slate-700">
+                <PaperClipIcon className="h-6 w-6 text-slate-300" />
+              </button>
+              <button onClick={handleSend} className="p-2 rounded hover:bg-slate-700">
+                <ArrowUpCircleIcon className="h-6 w-6 text-slate-300" />
+              </button>
+            </div>
+            {/* Barra input */}
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Scrivi un comando..."
+              rows={1}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                }
+              }}
+              className="inline-block p-3 rounded-lg border-1 border-slate-300 text-slate-300 flex-1 px-4 py-2 bg-slate-700 focus:outline-none resize-none whitespace-pre-wrap w-full"
             />
           </div>
-        ))}
-      </div>
+        </div>
+      ) : (
+        // ✅ Layout originale con messaggi
+        <>
+          {/* Area messaggi */}
+          <div className="flex-1 overflow-y-auto space-y-5">
+            {messages.map((msg) => (
+              <div
+                key={msg.id}
+                onMouseEnter={() => setHoveredId(msg.id)}
+                onMouseLeave={() => setHoveredId(null)}
+                className={`relative flex ${msg.sent ? "justify-end" : "justify-start"} mb-2`}
+              >
+                <MessageBubble
+                  msg={msg}
+                  isHovered={hoveredId === msg.id}
+                  isEditing={inlineEditId === msg.id}
+                  onEditStart={handleInlineEdit}
+                  onEditConfirm={handleConfirmEdit}
+                  onChangeText={handleChangeText}
+                />
+              </div>
+            ))}
+          </div>
 
-      {/* Area input principale */}
-      <div className="mt-4 flex items-center gap-2">
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Scrivi un messaggio..."
-          rows={3}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              handleSend();
-            }
-          }}
-          className="inline-block p-3 rounded-lg border-1 border-slate-300 text-slate-300 flex-1 px-4 py-2 bg-slate-700 focus:outline-none resize-none whitespace-pre-wrap"
-        />
-        <button onClick={handleSend} className="btn-blu flex items-center gap-2">
-          <ArrowUpCircleIcon className="w-6 h-6" />
-          Invia
-        </button>
-      </div>
+          {/* Area input principale */}
+          <div className="mt-4 flex items-center gap-2">
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Scrivi un messaggio..."
+              rows={3}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSend();
+                }
+              }}
+              className="inline-block p-3 rounded-lg border-1 border-slate-300 text-slate-300 flex-1 px-4 py-2 bg-slate-700 focus:outline-none resize-none whitespace-pre-wrap"
+            />
+            <button onClick={handleSend} className="btn-blu flex items-center gap-2">
+              <ArrowUpCircleIcon className="w-6 h-6" />
+              Invia
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
