@@ -28,10 +28,10 @@ export default function UserMenu({
   return (
     <>
       {/* Menu principale */}
-      <div className="bg-slate-800 rounded-xl shadow-xl p-4 w-56">
+      <div className="bg-slate-800 rounded-xl shadow-xl p-2 w-56">
         {/* Header utente con hover e click */}
         <div
-          className="flex items-center gap-3 mb-4 p-2 rounded-lg hover:bg-slate-700 transition-colors cursor-pointer"
+          className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-700 transition-colors cursor-pointer"
           onClick={() => setShowDetails(true)}
         >
           <div className="rounded-full bg-blue-600 text-white w-10 h-10 flex items-center justify-center">

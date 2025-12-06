@@ -63,14 +63,14 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
                   onSend();
                 }
               }}
-              className="tracking-wide drop-shadow-lg w-full p-3 pl-14 pr-14 rounded-full border border-slate-300 text-slate-300 bg-slate-700 focus:outline-none resize-none no-scrollbar"
+              className="tracking-wide drop-shadow-lg w-full p-3 pl-14 pr-14 rounded-lg border border-slate-300 text-slate-300 bg-slate-700 focus:outline-none resize-none no-scrollbar"
             />
-            <button className="absolute left-1 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-500 rounded-full transition-all duration-200">
+            <button className="absolute left-1 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-500 rounded-lg transition-all duration-200">
               <PaperClipIcon className="h-6 w-6 text-slate-300" />
             </button>
             <button
               onClick={onSend}
-              className="absolute right-1 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-500 rounded-full transition-all duration-200"
+              className="absolute right-1 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-500 rounded-lg transition-all duration-200"
             >
               <ArrowUpCircleIcon className="h-6 w-6 text-slate-300" />
             </button>
@@ -121,10 +121,10 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
                     onSend();
                   }
                 }}
-                className="tracking-wide drop-shadow-lg w-full p-3 pl-14 pr-14 rounded-full border border-slate-300 text-slate-300 bg-slate-700 focus:outline-none resize-none no-scrollbar"
+                className="tracking-wide drop-shadow-lg w-full p-3 pl-14 pr-14 rounded-lg border border-slate-300 text-slate-300 bg-slate-700 focus:outline-none resize-none no-scrollbar"
               />
               <button
-                className="absolute left-1 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-500 rounded-full transition-all duration-200"
+                className="absolute left-1 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-500 rounded-lg transition-all duration-200"
                 aria-label="Allega file"
                 type="button"
               >
@@ -132,7 +132,7 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
               </button>
               <button
                 onClick={onSend}
-                className="absolute right-1 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-500 rounded-full transition-all duration-200"
+                className="absolute right-1 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-500 rounded-lg transition-all duration-200"
                 aria-label="Invia"
                 type="button"
               >

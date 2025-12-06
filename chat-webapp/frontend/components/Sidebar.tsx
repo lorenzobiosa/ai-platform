@@ -76,14 +76,14 @@ export default function Sidebar({
         {/* Riga Home + Toggle Sidebar */}
         <div className="flex justify-between items-center mb-3">
           {!isCollapsed && (
-            <button className="hover:bg-slate-700 rounded-full p-2 transition-colors focus:outline-none">
+            <button className="hover:bg-slate-700 rounded-lg p-2 transition-colors focus:outline-none">
               <BuildingOfficeIcon className="w-6 h-6" />
               <span className="sr-only">Home</span>
             </button>
           )}
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="hover:bg-slate-700 rounded-full p-2 transition-colors focus:outline-none"
+            className="hover:bg-slate-700 rounded-lg p-2 transition-colors focus:outline-none"
           >
             <RectangleGroupIcon className="w-6 h-6" />
             <span className="sr-only">Toggle Sidebar</span>
@@ -94,7 +94,7 @@ export default function Sidebar({
         <div
           className={`flex items-center ${
             isCollapsed ? "justify-center" : "gap-2"
-          } cursor-pointer hover:bg-slate-700 rounded-full p-2 transition-colors`}
+          } cursor-pointer hover:bg-slate-700 rounded-lg p-2 transition-colors`}
         >
           <PencilSquareIcon className="w-5 h-5" />
           {!isCollapsed && <span className="font-semibold text-slate-300">Nuova chat</span>}
@@ -104,7 +104,7 @@ export default function Sidebar({
         <div
           className={`flex items-center ${
             isCollapsed ? "justify-center" : "gap-2"
-          } mb-3 cursor-pointer hover:bg-slate-700 rounded-full p-2 transition-colors`}
+          } mb-3 cursor-pointer hover:bg-slate-700 rounded-lg p-2 transition-colors`}
         >
           <MagnifyingGlassIcon className="w-5 h-5" />
           {!isCollapsed && <span className="font-semibold text-slate-300">Ricerca chat</span>}
@@ -113,12 +113,12 @@ export default function Sidebar({
         {/* Storico conversazioni */}
         {!isCollapsed && (
           <section className="text-slate-300 text-sm overflow-y-auto p-2">
-            <p className="font-semibold mb-2 text-slate-400">Conversazioni recenti</p>
+            <p className="font-semibold mb-2 text-slate-300">Conversazioni recenti</p>
             <ul className="text-xs">
               {chats.map((chat) => (
                 <li
                   key={chat.id}
-                  className="hover:bg-slate-700 rounded-full p-2 cursor-pointer -ml-2 relative group"
+                  className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer relative group"
                 >
                   {chat.name}
                   {/* Pulsante tre puntini */}
@@ -150,11 +150,11 @@ export default function Sidebar({
       {/* Area utente */}
       <div className="border-t border-slate-700 mb-1"></div>
       <div
-        className="flex items-center gap-3 cursor-pointer p-2 rounded-full hover:bg-slate-700 transition-colors"
+        className="flex items-center gap-3 cursor-pointer p-2 rounded-lg hover:bg-slate-700 transition-colors"
         onClick={() => setIsMenuOpen(!isMenuOpen)}
         aria-label="Menu utente"
       >
-        <div className="tracking-wide border border-slate-300 rounded-full bg-blue-600 text-slate-100 text-xs w-6 h-6 flex items-center justify-center">
+        <div className="font-semibold tracking-wide border border-slate-300 rounded-full bg-blue-600 text-slate-100 text-[11px] w-6 h-6 flex items-center justify-center">
           {initials}
         </div>
         {!isCollapsed && (
