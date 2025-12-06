@@ -1,3 +1,5 @@
+import { useRef, useEffect, useState } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 import { ClipboardIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 
 interface MessageBoxProps {
@@ -17,35 +19,48 @@ export default function MessageBox({
   onEditConfirm,
   onChangeText,
 }: MessageBoxProps) {
+  const boxRef = useRef<HTMLDivElement>(null);
+  const [boxWidth, setBoxWidth] = useState<string>("100%");
+
+  useEffect(() => {
+    if (boxRef.current) {
+      const style = window.getComputedStyle(boxRef.current);
+      const paddingLeft = parseFloat(style.paddingLeft);
+      const paddingRight = parseFloat(style.paddingRight);
+      const rect = boxRef.current.getBoundingClientRect();
+      setBoxWidth(`${rect.width - paddingLeft - paddingRight}px`);
+    }
+  }, [isEditing]);
+
   return (
     <div
-      className={`inline-block p-3 rounded-xl border-2 max-w-[70%] ${
+      ref={boxRef}
+      className={`block p-3 rounded-lg max-w-[70%] ${
         msg.sent
-          ? "bg-slate-700 border-slate-400 text-slate-300 self-end"
-          : "bg-slate-700 border-slate-400 text-slate-300 self-start"
+          ? "bg-slate-700 text-slate-300 self-end"
+          : "bg-slate-700 text-slate-300 self-start"
       } shadow-lg relative`}
     >
       {isEditing ? (
-        <textarea
+        <TextareaAutosize
           value={msg.text}
           onChange={(e) => onChangeText(msg.id, e.target.value)}
-          onInput={(e) => {
-            e.currentTarget.style.height = "auto";
-            e.currentTarget.style.height = `${e.currentTarget.scrollHeight}px`;
-          }}
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
               onEditConfirm(msg.id, msg.text);
             }
           }}
-          className="w-full resize-none rounded-xl border-2 p-3"
-          style={{ fontSize: "inherit", height: "auto", overflow: "hidden" }}
+          minRows={1}
+          className="resize-none rounded-lg bg-transparent text-slate-300 focus:outline-none transition-all duration-150"
+          style={{
+            fontSize: "inherit",
+            width: boxWidth, // stessa larghezza del box
+          }}
         />
       ) : (
         <span className="whitespace-pre-wrap">{msg.text}</span>
       )}
-
       {isHovered && (
         <div className="absolute bottom-0 right-4 translate-y-1/2 flex gap-2 bg-slate-700/80 backdrop-blur-sm border border-slate-500 rounded-md p-1 shadow-xl z-50 transition transform duration-200 ease-out scale-95 hover:scale-100 opacity-90">
           <ClipboardIcon
