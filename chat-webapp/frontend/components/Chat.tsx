@@ -63,7 +63,7 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
                   onSend();
                 }
               }}
-              className="w-full p-3 pl-14 pr-14 rounded-full border border-slate-300 text-slate-300 bg-slate-700 focus:outline-none resize-none no-scrollbar"
+              className="tracking-wide drop-shadow-lg w-full p-3 pl-14 pr-14 rounded-full border border-slate-300 text-slate-300 bg-slate-700 focus:outline-none resize-none no-scrollbar"
             />
             <button className="absolute left-1 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-500 rounded-full transition-all duration-200">
               <PaperClipIcon className="h-6 w-6 text-slate-300" />
@@ -80,7 +80,7 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
         <>
           {/* ✅ AREA MESSAGGI — stesso wrapper centrato della input */}
           <div className="w-full flex-1 overflow-y-auto">
-            <span className="pl-2 text-xl font-semibold tracking-wide text-slate-100 bg-transparent drop-shadow-lg select-none">AI Platform</span>
+            <span className="pl-2 text-xl font-semibold tracking-wide text-slate-100 bg-transparent tracking-wide drop-shadow-lg select-none">AI Platform</span>
             <div className="mt-4 mx-auto w-full max-w-2xl space-y-5">
               {messages.map((msg) => (
                 <div
@@ -103,7 +103,7 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
           </div>
 
           {/* ✅ INPUT PILL — identica alla homepage */}
-          <div className="w-full mt-4">
+          <div className="w-full mt-4 mb-4">
             <div className="relative mx-auto w-full max-w-2xl flex items-center">
               <textarea
                 value={inputText}
@@ -121,7 +121,7 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
                     onSend();
                   }
                 }}
-                className="w-full p-3 pl-14 pr-14 rounded-full border border-slate-300 text-slate-300 bg-slate-700 focus:outline-none resize-none no-scrollbar"
+                className="tracking-wide drop-shadow-lg w-full p-3 pl-14 pr-14 rounded-full border border-slate-300 text-slate-300 bg-slate-700 focus:outline-none resize-none no-scrollbar"
               />
               <button
                 className="absolute left-1 top-1/2 -translate-y-1/2 p-2 hover:bg-slate-500 rounded-full transition-all duration-200"
@@ -139,6 +139,7 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
                 <ArrowUpCircleIcon className="h-6 w-6 text-slate-300" />
               </button>
             </div>
+            
           </div>
         </>
       )}

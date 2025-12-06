@@ -40,7 +40,7 @@ export default function MessageBubble({
   }, [isEditing]);
 
   const base =
-    "border border-slate-300 block p-3 rounded-xl max-w-[75%] bg-slate-700 text-slate-300 shadow-lg relative";
+    "drop-shadow-lg tracking-wide border border-slate-300 block p-3 rounded-xl max-w-[75%] bg-slate-700 text-slate-300 shadow-lg relative";
 
   return (
     <div ref={boxRef} className={base}>
@@ -58,7 +58,7 @@ export default function MessageBubble({
             }
           }}
           minRows={1}
-          className="resize-none bg-transparent text-slate-300 focus:outline-none transition-all duration-150"
+          className="no-scrollbar resize-none bg-transparent text-slate-300 focus:outline-none transition-all duration-150"
           style={{ fontSize: "inherit", width: boxWidth }}
         />
       ) : (
