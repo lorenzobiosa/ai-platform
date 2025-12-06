@@ -43,10 +43,10 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
       {!hasMessages ? (
         // ✅ Layout iniziale
         <div className="flex flex-col items-center justify-start flex-1 text-center pt-32">
-          <h1 className="text-6xl font-bold mb-8 mt-24">AI Platform</h1>
+          <h1 className="text-6xl font-bold mb-8 mt-24 bg-transparent drop-shadow-lg select-none">AI Platform</h1>
 
           {/* INPUT PILL (wrapper centrato e relativo) */}
-          <div className="relative mx-auto w-full max-w-3xl flex items-center">
+          <div className="relative mx-auto w-full max-w-2xl flex items-center">
             <textarea
               value={inputText}
               onChange={(e) => {
@@ -80,7 +80,8 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
         <>
           {/* ✅ AREA MESSAGGI — stesso wrapper centrato della input */}
           <div className="w-full flex-1 overflow-y-auto">
-            <div className="mx-auto w-full max-w-3xl space-y-5">
+            <span className="pl-2 text-xl font-semibold tracking-wide text-slate-100 bg-transparent drop-shadow-lg select-none">AI Platform</span>
+            <div className="mt-4 mx-auto w-full max-w-2xl space-y-5">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
@@ -103,7 +104,7 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
 
           {/* ✅ INPUT PILL — identica alla homepage */}
           <div className="w-full mt-4">
-            <div className="relative mx-auto w-full max-w-3xl flex items-center">
+            <div className="relative mx-auto w-full max-w-2xl flex items-center">
               <textarea
                 value={inputText}
                 onChange={(e) => {
