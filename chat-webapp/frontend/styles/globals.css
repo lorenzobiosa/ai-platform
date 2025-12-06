@@ -113,3 +113,13 @@ body {
   scrollbar-width: thin;
   scrollbar-color: #475569 #0f172a;
 }
+
+/* Nasconde la scrollbar solo per la classe no-scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE e Edge */
+  scrollbar-width: none; /* Firefox */
+}

@@ -60,7 +60,7 @@ export default function Chat({ messages, inputText, setInputText, onSend }: Chat
                   onSend();
                 }
               }}
-              className="w-full p-3 pl-14 pr-14 rounded-full border border-slate-300 text-slate-300 bg-slate-700 focus:outline-none resize-none"
+              className="w-full p-3 pl-14 pr-14 rounded-full border border-slate-300 text-slate-300 bg-slate-700 focus:outline-none resize-none no-scrollbar"
             />
             {/* Pulsante allega */}
             <button className="absolute left-1 top-1/2 transform -translate-y-1/2 p-2 hover:bg-slate-500 rounded-full transition-all duration-200">
