@@ -46,7 +46,7 @@ export default function Sidebar({
       }`}
     >
       {/* Sezione di navigazione */}
-      <nav className="text-slate-300">
+      <nav className="text-slate-300 h-full">
         {/* Riga Home + Toggle Sidebar */}
         <div className="flex justify-between items-center mb-3">
           <button
@@ -82,7 +82,7 @@ export default function Sidebar({
 
         {/* Storico conversazioni */}
         {!isCollapsed && (
-          <section className="text-slate-300 text-sm overflow-y-auto max-h-64 p-2">
+          <section className="text-slate-300 text-sm overflow-y-auto p-2">
             <p className="mb-2 text-slate-400">Recent chats</p>
             <ul>
               <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
@@ -98,19 +98,19 @@ export default function Sidebar({
                 Conversazione AI
               </li>
               <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
-                Conversazione AI
+                Sviluppo Software
               </li>
               <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
-                Conversazione AI
+                Installazione OpenShift
               </li>
               <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
-                Conversazione AI
+                Configurazione FreeIPA
               </li>
               <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
-                Conversazione AI
+                Conversazione di Prova
               </li>
               <li className="hover:bg-slate-700 rounded-lg p-2 cursor-pointer -ml-2">
-                Conversazione AI
+                Frontend React
               </li>
             </ul>
           </section>
