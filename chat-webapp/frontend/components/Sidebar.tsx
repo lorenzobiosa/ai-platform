@@ -114,7 +114,7 @@ export default function Sidebar({
         {!isCollapsed && (
           <section className="text-slate-300 text-sm overflow-y-auto p-2">
             <p className="font-semibold mb-2 text-slate-400">Conversazioni recenti</p>
-            <ul>
+            <ul className="text-xs">
               {chats.map((chat) => (
                 <li
                   key={chat.id}
