@@ -6,7 +6,6 @@ import { loginRequest, getMsalInstance } from "../msal";
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Chat from "../components/Chat";
-import { PaperClipIcon, ArrowUpCircleIcon } from "@heroicons/react/24/outline";
 
 function ChatPageInner() {
   const msalInstance = getMsalInstance();
@@ -17,10 +16,8 @@ function ChatPageInner() {
   const [givenName, setGivenName] = useState<string | null>(null);
   const [surname, setSurname] = useState<string | null>(null);
 
-  // Stato per layout iniziale
   const [messages, setMessages] = useState<{ id: string; text: string; sent: boolean }[]>([]);
   const [inputText, setInputText] = useState("");
-  const hasMessages = messages.length > 0;
 
   /** Login automatico se non autenticato */
   useEffect(() => {
@@ -62,7 +59,6 @@ function ChatPageInner() {
     fetchGraphData();
   }, [isAuthenticated, accounts, msalInstance]);
 
-  /** Se non autenticato, mostra messaggio di attesa */
   if (!isAuthenticated) {
     return (
       <div className="flex items-center justify-center h-screen text-slate-200">
@@ -73,7 +69,6 @@ function ChatPageInner() {
 
   const account = instance.getActiveAccount() ?? accounts[0];
 
-  /** Logout sicuro */
   const handleLogout = () => {
     try {
       sessionStorage.removeItem("msal_login_attempted");
@@ -82,7 +77,6 @@ function ChatPageInner() {
     msalInstance?.logoutRedirect();
   };
 
-  /** Invio messaggio */
   const handleSend = () => {
     if (!inputText.trim()) return;
     setMessages([...messages, { id: Date.now().toString(), text: inputText, sent: true }]);

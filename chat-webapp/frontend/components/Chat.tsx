@@ -8,18 +8,16 @@ interface Message {
   sent: boolean;
 }
 
-export default function Chat() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
+interface ChatProps {
+  messages: Message[];
+  inputText: string;
+  setInputText: (value: string) => void;
+  onSend: () => void;
+}
+
+export default function Chat({ messages, inputText, setInputText, onSend }: ChatProps) {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [inlineEditId, setInlineEditId] = useState<string | null>(null);
-
-  const handleSend = () => {
-    if (!input.trim()) return;
-    const newMessages = [...messages, { id: Date.now().toString(), text: input, sent: true }];
-    setMessages(newMessages);
-    setInput("");
-  };
 
   const handleInlineEdit = (id: string) => {
     setInlineEditId(id);
@@ -35,52 +33,50 @@ export default function Chat() {
         newMessages = newMessages.slice(0, index + 1);
       }
     }
-    setMessages(newMessages);
     setInlineEditId(null);
   };
 
   const handleChangeText = (id: string, value: string) => {
-    const updated = messages.map((m) => (m.id === id ? { ...m, text: value } : m));
-    setMessages(updated);
+    console.log(`Modifica messaggio ${id}: ${value}`);
   };
 
-  // ✅ Logica per schermata iniziale
   const hasMessages = messages.length > 0;
 
   return (
     <div className="flex flex-col h-full p-4 bg-slate-800 text-slate-200 text-sm">
       {!hasMessages ? (
         // ✅ Layout iniziale
-        <div className="flex flex-col items-center justify-center flex-1 text-center">
-          <h1 className="text-5xl font-bold mb-8">AI Platform</h1>
-          <div className="w-full max-w-xl">
-            {/* Pulsanti sopra input */}
-            <div className="flex justify-between mb-2">
-              <button className="p-2 rounded hover:bg-slate-700">
-                <PaperClipIcon className="h-6 w-6 text-slate-300" />
-              </button>
-              <button onClick={handleSend} className="p-2 rounded hover:bg-slate-700">
-                <ArrowUpCircleIcon className="h-6 w-6 text-slate-300" />
-              </button>
-            </div>
-            {/* Barra input */}
+        <div className="flex flex-col items-center justify-start flex-1 text-center pt-32">
+          <h1 className="text-6xl font-bold mb-8 mt-24">AI Platform</h1>
+          <div className="relative w-full max-w-xl flex items-center">
             <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
               placeholder="Scrivi un comando..."
               rows={1}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
-                  handleSend();
+                  onSend();
                 }
               }}
-              className="inline-block p-3 rounded-lg border-1 border-slate-300 text-slate-300 flex-1 px-4 py-2 bg-slate-700 focus:outline-none resize-none whitespace-pre-wrap w-full"
+              className="w-full p-3 pl-14 pr-14 rounded-full border border-slate-300 text-slate-300 bg-slate-700 focus:outline-none resize-none"
             />
+            {/* Pulsante allega */}
+            <button className="absolute left-1 top-1/2 transform -translate-y-1/2 p-2 hover:bg-slate-500 rounded-full transition-all duration-200">
+              <PaperClipIcon className="h-6 w-6 text-slate-300" />
+            </button>
+            {/* Pulsante invia */}
+            <button
+              onClick={onSend}
+              className="absolute right-1 top-1/2 transform -translate-y-1/2 p-2 hover:bg-slate-500 rounded-full transition-all duration-200"
+            >
+              <ArrowUpCircleIcon className="h-6 w-6 text-slate-300" />
+            </button>
           </div>
         </div>
       ) : (
-        // ✅ Layout originale con messaggi
+        // ✅ Layout chat classico
         <>
           {/* Area messaggi */}
           <div className="flex-1 overflow-y-auto space-y-5">
@@ -106,19 +102,19 @@ export default function Chat() {
           {/* Area input principale */}
           <div className="mt-4 flex items-center gap-2">
             <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
               placeholder="Scrivi un messaggio..."
               rows={3}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
-                  handleSend();
+                  onSend();
                 }
               }}
               className="inline-block p-3 rounded-lg border-1 border-slate-300 text-slate-300 flex-1 px-4 py-2 bg-slate-700 focus:outline-none resize-none whitespace-pre-wrap"
             />
-            <button onClick={handleSend} className="btn-blu flex items-center gap-2">
+            <button onClick={onSend} className="btn-blu flex items-center gap-2">
               <ArrowUpCircleIcon className="w-6 h-6" />
               Invia
             </button>
