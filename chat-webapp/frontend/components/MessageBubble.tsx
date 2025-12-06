@@ -1,3 +1,4 @@
+
 import { useRef, useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { ClipboardIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
@@ -8,7 +9,7 @@ interface MessageBubbleProps {
   isEditing: boolean;
   onEditStart: (id: string) => void;
   onEditConfirm: (id: string, newText: string) => void;
-  onChangeText: (id: string, value: string) => void;
+  onChangeText: (id: string, value: string) => void; // opzionale: per analytics/log
 }
 
 export default function MessageBubble({
@@ -21,6 +22,12 @@ export default function MessageBubble({
 }: MessageBubbleProps) {
   const boxRef = useRef<HTMLDivElement>(null);
   const [boxWidth, setBoxWidth] = useState<string>("100%");
+  const [draft, setDraft] = useState<string>(msg.text); // 👈 stato locale
+
+  // Sincronizza draft quando entri in modalità editing o msg cambia
+  useEffect(() => {
+    if (isEditing) setDraft(msg.text);
+  }, [isEditing, msg.id, msg.text]);
 
   useEffect(() => {
     if (boxRef.current) {
@@ -39,12 +46,15 @@ export default function MessageBubble({
     <div ref={boxRef} className={base}>
       {isEditing ? (
         <TextareaAutosize
-          value={msg.text}
-          onChange={(e) => onChangeText(msg.id, e.target.value)}
+          value={draft}                             // 👈 usa draft, non msg.text
+          onChange={(e) => {
+            setDraft(e.target.value);              // 👈 aggiorna lo stato locale
+            onChangeText?.(msg.id, e.target.value); // (facoltativo) callback al parent
+          }}
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
-              onEditConfirm(msg.id, msg.text);
+              onEditConfirm(msg.id, draft);        // 👈 conferma con draft
             }
           }}
           minRows={1}
