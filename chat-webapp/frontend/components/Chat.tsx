@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/outline";
-import MessageBox from "./MessageBox";
+import MessageBubble from "./MessageBubble";
 
 interface Message {
   id: string;
@@ -55,7 +55,7 @@ export default function Chat() {
             onMouseLeave={() => setHoveredId(null)}
             className={`relative flex ${msg.sent ? "justify-end" : "justify-start"} mb-2`}
           >
-            <MessageBox
+            <MessageBubble
               msg={msg}
               isHovered={hoveredId === msg.id}
               isEditing={inlineEditId === msg.id}

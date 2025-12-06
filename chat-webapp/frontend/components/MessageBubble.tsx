@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { ClipboardIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 
-interface MessageBoxProps {
+interface MessageBubbleProps {
   msg: { id: string; text: string; sent: boolean };
   isHovered: boolean;
   isEditing: boolean;
@@ -11,14 +11,14 @@ interface MessageBoxProps {
   onChangeText: (id: string, value: string) => void;
 }
 
-export default function MessageBox({
+export default function MessageBubble({
   msg,
   isHovered,
   isEditing,
   onEditStart,
   onEditConfirm,
   onChangeText,
-}: MessageBoxProps) {
+}: MessageBubbleProps) {
   const boxRef = useRef<HTMLDivElement>(null);
   const [boxWidth, setBoxWidth] = useState<string>("100%");
 
