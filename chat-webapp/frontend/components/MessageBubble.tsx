@@ -32,15 +32,11 @@ export default function MessageBubble({
     }
   }, [isEditing]);
 
+  const base =
+    "border border-slate-300 block p-3 rounded-xl max-w-[75%] bg-slate-700 text-slate-300 shadow-lg relative";
+
   return (
-    <div
-      ref={boxRef}
-      className={`block p-3 rounded-lg max-w-[70%] ${
-        msg.sent
-          ? "bg-slate-700 text-slate-300 self-end"
-          : "bg-slate-700 text-slate-300 self-start"
-      } shadow-lg relative`}
-    >
+    <div ref={boxRef} className={base}>
       {isEditing ? (
         <TextareaAutosize
           value={msg.text}
@@ -52,15 +48,13 @@ export default function MessageBubble({
             }
           }}
           minRows={1}
-          className="resize-none rounded-lg bg-transparent text-slate-300 focus:outline-none transition-all duration-150"
-          style={{
-            fontSize: "inherit",
-            width: boxWidth, // stessa larghezza del box
-          }}
+          className="resize-none bg-transparent text-slate-300 focus:outline-none transition-all duration-150"
+          style={{ fontSize: "inherit", width: boxWidth }}
         />
       ) : (
         <span className="whitespace-pre-wrap">{msg.text}</span>
       )}
+
       {isHovered && (
         <div className="absolute bottom-0 right-4 translate-y-1/2 flex gap-2 bg-slate-700/80 backdrop-blur-sm border border-slate-500 rounded-md p-1 shadow-xl z-50 transition transform duration-200 ease-out scale-95 hover:scale-100 opacity-90">
           <ClipboardIcon
