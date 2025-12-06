@@ -5,7 +5,7 @@ import { InteractionStatus, InteractionRequiredAuthError } from "@azure/msal-bro
 import { loginRequest, getMsalInstance } from "../msal";
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
-import Chat from "../components/Chat"; // Componente chat con input e messaggi
+import Chat from "../components/Chat";
 
 function ChatPageInner() {
   const msalInstance = getMsalInstance();
@@ -111,7 +111,7 @@ function ChatPageInner() {
           </div>
         </aside>
 
-        {/* Area chat con input in basso */}
+        {/* Area chat */}
         <main className="flex-1 flex flex-col">
           <Chat /> {/* Componente con messaggi scrollabili e barra input */}
         </main>
